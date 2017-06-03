@@ -27,20 +27,20 @@ error_reporting(0);
 
 class Pushups
 {
-	private $mycon;
+    private $mycon;
 
-	public function __construct() {
-		require 'config.php';
-		$response = '';
+    public function __construct() {
+        require 'config.php';
+        $response = '';
 
-		$method = isset($_SERVER["REQUEST_METHOD"]) && $_POST ? strtoupper($_SERVER["REQUEST_METHOD"]) : 'GET';
+        $method = isset($_SERVER["REQUEST_METHOD"]) && $_POST ? strtoupper($_SERVER["REQUEST_METHOD"]) : 'GET';
 
-		switch ($method) {
-			case 'GET':
-				$response = 'Daily Pushups Counter for Slack Teams<br />Brought to you with minor affection by <a href="https://twitter.com/perelson">@perelson</a>';
-				break;
-			case 'POST':
-        		header('Content-type: application/json');
+        switch ($method) {
+            case 'GET':
+                $response = 'Daily Pushups Counter for Slack Teams<br />Brought to you with minor affection by <a href="https://twitter.com/perelson">@perelson</a>';
+                break;
+            case 'POST':
+                header('Content-type: application/json');
                 $data = $_POST;
                 /*
                     Possible Webhook POST data
@@ -77,7 +77,7 @@ class Pushups
                             values (NOW(), ?, ?, ?, ?)
                             on duplicate key update `count` = `count` + ?
                         ';
-			            $stmt = $con->prepare($sql);
+                        $stmt = $con->prepare($sql);
                         $stmt->bind_param("sssii", $teamId, $userId, $username, $value, $value);
                         $stmt->execute();
                         $stmt->close();
@@ -92,9 +92,9 @@ class Pushups
                     ';
                     $stmt = $con->prepare($resSql);
                     $stmt->execute();
-        			$stmt->bind_result($count, $name);
-        			$leaders = '';
-        			$position = 0;
+                    $stmt->bind_result($count, $name);
+                    $leaders = '';
+                    $position = 0;
 
                     while ($stmt->fetch()) {
                         $position++;
@@ -110,22 +110,22 @@ class Pushups
                         $response .= $leaders;
                     }
                 }
-				break;
-		}
+                break;
+        }
 
         echo $response;
-	}
+    }
 
-	private function dbCon() {
-		if (!isset($this->mycon)) {
-			$this->mycon = new mysqli($this->mysql['server'], $this->mysql['user'], $this->mysql['pwd'], $this->mysql['db']);
-		}
-		if (mysqli_connect_errno()) {
-			echo '';
-			die();
-		}
-		return $this->mycon;
-	}
+    private function dbCon() {
+        if (!isset($this->mycon)) {
+            $this->mycon = new mysqli($this->mysql['server'], $this->mysql['user'], $this->mysql['pwd'], $this->mysql['db']);
+        }
+        if (mysqli_connect_errno()) {
+            echo '';
+            die();
+        }
+        return $this->mycon;
+    }
 
     private function arrayGet($array, $key, $default = null)
     {
