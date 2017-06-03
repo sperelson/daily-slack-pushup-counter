@@ -63,13 +63,11 @@ class Pushups
                 $userId = $this->arrayGet($data, 'user_id', false);
                 $username = $this->arrayGet($data, 'user_name', '');
                 $value = $this->arrayGet($data, 'text');
-                $responseUrl = $this->arrayGet($data, 'response_url', false);
 
                 if (
                     $token == $this->slackToken
                     && $teamId !== false
                     && $userId !== false
-                    && $responseUrl !== false
                 ) {
                     $con = $this->dbCon();
 
