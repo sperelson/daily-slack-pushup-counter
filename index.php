@@ -85,10 +85,10 @@ class Pushups
                     }
                     $resSql = '
                         select SUM(count) as counts, name from pushups
-                        where today > DATE_SUB(NOW(), INTERVAL 31 DAY)
+                        where today > DATE_SUB(NOW(), INTERVAL 10 DAY)
                         group by userid
                         order by counts desc
-                        limit 5
+                        limit 10
                     ';
                     $stmt = $con->prepare($resSql);
                     $stmt->execute();
@@ -105,7 +105,7 @@ class Pushups
 
                     if (strlen($leaders) > 0) {
                         $response .= "\n";
-                        $response .= '*10 day leaderboard (top 5)*';
+                        $response .= '*10 day leaderboard*';
                         $response .= "\n";
                         $response .= $leaders;
                     }
